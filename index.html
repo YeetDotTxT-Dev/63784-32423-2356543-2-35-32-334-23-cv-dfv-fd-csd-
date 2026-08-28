@@ -3,72 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omnix Script Hub</title>
+    <title>Walls Resources</title>
+    
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ────────────────────────────────────────────── */
+        /* RESET & BASE */
+        /* ────────────────────────────────────────────── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: #0a0a0f;
             color: #e0e0e0;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            overflow-x: hidden;
+            cursor: none;
         }
-        .container {
-            max-width: 800px;
+        
+        /* ────────────────────────────────────────────── */
+        /* GALAXY BACKGROUND */
+        /* ────────────────────────────────────────────── */
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background: linear-gradient(145deg, #12121a, #1a1a2e);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255,255,255,0.05);
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 80%, rgba(236, 72, 153, 0.04) 0%, transparent 40%),
+                #0a0a0f;
+            overflow: hidden;
         }
+        
+        /* Stars */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Nebula clouds */
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: nebulaFloat 20s ease-in-out infinite alternate;
+        }
+        
+        .nebula:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: #7c3aed;
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+        
+        .nebula:nth-child(2) {
+            width: 600px;
+            height: 600px;
+            background: #3b82f6;
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -7s;
+        }
+        
+        .nebula:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: #ec4899;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+        
+        @keyframes nebulaFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 30px) scale(1.1); }
+        }
+        
+        /* Shooting stars */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.3);
+            animation: shoot 4s linear infinite;
+        }
+        
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+            right: 2px;
+        }
+        
+        @keyframes shoot {
+            0% {
+                transform: translate(0, 0) rotate(-45deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            20% {
+                transform: translate(-400px, 400px) rotate(-45deg);
+                opacity: 1;
+            }
+            25% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        
+        /* ────────────────────────────────────────────── */
+        /* CURSOR TRAIL */
+        /* ────────────────────────────────────────────── */
+        .cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #a78bfa;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            transition: width 0.1s, height 0.1s;
+        }
+        
+        .cursor-trail {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(124, 58, 237, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: opacity 0.5s;
+        }
+        
+        .cursor-ring {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 1.5px solid rgba(124, 58, 237, 0.15);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9997;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border-color 0.3s;
+        }
+        
+        .cursor-ring.hover {
+            width: 50px;
+            height: 50px;
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+        
+        /* ────────────────────────────────────────────── */
+        /* GLASS CONTAINER */
+        /* ────────────────────────────────────────────── */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        /* ────────────────────────────────────────────── */
+        /* HEADER */
+        /* ────────────────────────────────────────────── */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 24px 32px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
             margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
+        
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
         }
+        
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 52px;
+            height: 52px;
             background: linear-gradient(135deg, #7c3aed, #4f46e5);
-            border-radius: 10px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 24px;
             color: white;
+            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4);
+            animation: pulseGlow 3s ease-in-out infinite;
+            position: relative;
         }
+        
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(10px);
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 4px 30px rgba(124, 58, 237, 0.3); }
+            50% { box-shadow: 0 4px 50px rgba(124, 58, 237, 0.6); }
+        }
+        
         .logo h1 {
-            font-size: 22px;
-            background: linear-gradient(135deg, #a78bfa, #818cf8);
+            font-family: 'Orbitron', monospace;
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #a78bfa, #818cf8, #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
+        
         .logo span {
-            font-size: 12px;
+            font-size: 13px;
             color: #6b7280;
             display: block;
-            margin-top: -2px;
+            margin-top: -3px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
+        
         .status-badge {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(34,197,94,0.1);
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(34,197,94,0.2);
+            gap: 10px;
+            background: rgba(34, 197, 94, 0.08);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(34, 197, 94, 0.15);
         }
+        
         .status-dot {
             width: 8px;
             height: 8px;
@@ -76,230 +298,514 @@
             background: #22c55e;
             animation: pulse 2s infinite;
         }
+        
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
         }
-        .status-badge span { font-size: 12px; color: #22c55e; font-weight: 500; }
+        
+        .status-badge span {
+            font-size: 13px;
+            color: #22c55e;
+            font-weight: 500;
+        }
+        
+        .version-tag {
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(124, 58, 237, 0.15);
+            color: #a78bfa;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            letter-spacing: 1px;
+        }
+        
+        /* ────────────────────────────────────────────── */
+        /* SEARCH BAR */
+        /* ────────────────────────────────────────────── */
         .search-bar {
             position: relative;
             margin-bottom: 25px;
         }
+        
         .search-bar input {
             width: 100%;
-            padding: 14px 20px 14px 48px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
+            padding: 18px 24px 18px 60px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
             color: #e0e0e0;
-            font-size: 14px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.4s;
             outline: none;
-            transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
+        
         .search-bar input:focus {
-            border-color: rgba(124,58,237,0.4);
-            background: rgba(255,255,255,0.06);
+            border-color: rgba(124, 58, 237, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 40px rgba(124, 58, 237, 0.05);
         }
-        .search-bar input::placeholder { color: #4b5563; }
+        
+        .search-bar input::placeholder {
+            color: #4b5563;
+        }
+        
         .search-bar i {
             position: absolute;
-            left: 16px;
+            left: 22px;
             top: 50%;
             transform: translateY(-50%);
             color: #4b5563;
+            font-size: 18px;
         }
+        
+        /* ────────────────────────────────────────────── */
+        /* TABS */
+        /* ────────────────────────────────────────────── */
         .tabs {
             display: flex;
             gap: 8px;
             margin-bottom: 25px;
             flex-wrap: wrap;
+            padding: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
         }
+        
         .tab {
-            padding: 8px 18px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.06);
+            padding: 10px 24px;
+            border-radius: 10px;
+            border: none;
             background: transparent;
             color: #6b7280;
             font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
         }
+        
         .tab:hover {
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             color: #d1d5db;
+            transform: translateY(-1px);
         }
+        
         .tab.active {
-            background: rgba(124,58,237,0.15);
-            border-color: rgba(124,58,237,0.3);
+            background: rgba(124, 58, 237, 0.15);
             color: #a78bfa;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.05);
         }
+        
+        .tab i {
+            margin-right: 6px;
+        }
+        
+        /* ────────────────────────────────────────────── */
+        /* SCRIPT GRID */
+        /* ────────────────────────────────────────────── */
         .scripts-grid {
             display: grid;
-            gap: 10px;
+            gap: 12px;
             max-height: 500px;
             overflow-y: auto;
             padding-right: 5px;
         }
-        .scripts-grid::-webkit-scrollbar { width: 4px; }
-        .scripts-grid::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 10px; }
+        
+        .scripts-grid::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .scripts-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        
+        .scripts-grid::-webkit-scrollbar-thumb {
+            background: rgba(124, 58, 237, 0.3);
+            border-radius: 10px;
+        }
+        
+        /* ────────────────────────────────────────────── */
+        /* SCRIPT CARD */
+        /* ────────────────────────────────────────────── */
         .script-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 20px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.04);
-            transition: all 0.3s;
+            padding: 20px 26px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.4s;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
         }
+        
         .script-card:hover {
-            background: rgba(255,255,255,0.04);
-            border-color: rgba(255,255,255,0.08);
-            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(124, 58, 237, 0.2);
+            transform: translateX(8px) scale(1.005);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
+        
+        .script-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.02), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .script-card:hover::before {
+            opacity: 1;
+        }
+        
         .script-info {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 18px;
             flex: 1;
+            position: relative;
+            z-index: 1;
         }
+        
         .script-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 20px;
             flex-shrink: 0;
+            transition: all 0.3s;
         }
-        .script-icon.aimbot { background: rgba(34,197,94,0.15); color: #22c55e; }
-        .script-icon.esp { background: rgba(59,130,246,0.15); color: #3b82f6; }
-        .script-icon.admin { background: rgba(239,68,68,0.15); color: #ef4444; }
+        
+        .script-card:hover .script-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+        
+        .script-icon.aimbot { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
+        .script-icon.esp { background: rgba(59, 130, 246, 0.12); color: #3b82f6; }
+        .script-icon.admin { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
+        .script-icon.troll { background: rgba(234, 179, 8, 0.12); color: #eab308; }
+        .script-icon.movement { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
+        .script-icon.loot { background: rgba(251, 146, 60, 0.12); color: #fb923c; }
+        .script-icon.remote { background: rgba(6, 182, 212, 0.12); color: #06b6d4; }
+        .script-icon.utility { background: rgba(236, 72, 153, 0.12); color: #ec4899; }
+        
         .script-name {
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 600;
             color: #e5e7eb;
         }
+        
         .script-desc {
-            font-size: 12px;
+            font-size: 13px;
             color: #6b7280;
             margin-top: 2px;
         }
+        
+        .script-tag {
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #4b5563;
+            margin-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
         .script-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
         }
-        .btn-copy {
-            padding: 6px 14px;
-            border-radius: 8px;
-            border: none;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: rgba(124,58,237,0.15);
-            color: #a78bfa;
-        }
-        .btn-copy:hover { background: rgba(124,58,237,0.25); }
+        
         .btn-load {
-            padding: 6px 14px;
+            padding: 8px 20px;
             border-radius: 8px;
             border: none;
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            background: rgba(34,197,94,0.15);
+            background: rgba(34, 197, 94, 0.12);
+            color: #22c55e;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-load::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .btn-load:hover {
+            background: rgba(34, 197, 94, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .btn-load:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-copy {
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(124, 58, 237, 0.12);
+            color: #a78bfa;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn-copy:hover {
+            background: rgba(124, 58, 237, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .btn-copy.copied {
+            background: rgba(34, 197, 94, 0.2);
             color: #22c55e;
         }
-        .btn-load:hover { background: rgba(34,197,94,0.25); }
+        
+        /* ────────────────────────────────────────────── */
+        /* FOOTER */
+        /* ────────────────────────────────────────────── */
         .footer {
-            margin-top: 25px;
+            margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.04);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 12px;
+            font-size: 13px;
             color: #4b5563;
         }
-        .footer-stats { display: flex; gap: 20px; }
-        .footer-stats span { display: flex; align-items: center; gap: 6px; }
+        
+        .footer-stats {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .footer-stats span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .footer a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        
+        .footer a:hover {
+            color: #a78bfa;
+        }
+        
+        /* ────────────────────────────────────────────── */
+        /* TOAST */
+        /* ────────────────────────────────────────────── */
         .toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            padding: 12px 24px;
-            border-radius: 12px;
-            background: rgba(16,16,26,0.95);
-            border: 1px solid rgba(255,255,255,0.06);
+            padding: 14px 28px;
+            border-radius: 14px;
+            background: rgba(16, 16, 26, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             color: #e5e7eb;
             font-size: 14px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             opacity: 0;
             z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            font-family: 'Inter', sans-serif;
         }
+        
         .toast.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
-        .toast i { margin-right: 10px; }
-        @media (max-width: 600px) {
-            .container { padding: 20px; }
-            .header { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .script-card { flex-wrap: wrap; gap: 10px; }
-            .script-actions { width: 100%; justify-content: flex-end; }
-            .tabs { gap: 4px; }
-            .tab { font-size: 11px; padding: 6px 12px; }
-            .footer { flex-direction: column; gap: 10px; align-items: flex-start; }
+        
+        .toast i {
+            margin-right: 10px;
+        }
+        
+        /* ────────────────────────────────────────────── */
+        /* RESPONSIVE */
+        /* ────────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding: 18px 22px;
+            }
+            
+            .logo h1 {
+                font-size: 20px;
+            }
+            
+            .script-card {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 16px 18px;
+            }
+            
+            .script-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .tabs {
+                gap: 4px;
+                padding: 4px;
+            }
+            
+            .tab {
+                font-size: 12px;
+                padding: 8px 14px;
+            }
+            
+            .footer {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            
+            .footer-stats {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            
+            .cursor-dot, .cursor-trail, .cursor-ring {
+                display: none !important;
+            }
+            
+            body {
+                cursor: auto !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container { padding: 12px; }
+            .logo h1 { font-size: 16px; }
+            .logo span { font-size: 10px; }
+            .logo-icon { width: 40px; height: 40px; font-size: 18px; }
+            .search-bar input { font-size: 13px; padding: 12px 16px 12px 45px; }
+            .script-name { font-size: 13px; }
+            .script-desc { font-size: 12px; }
+            .btn-load, .btn-copy { font-size: 12px; padding: 6px 12px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- ─── GALAXY BACKGROUND ─── -->
+    <div class="galaxy-bg">
+        <div class="stars" id="stars"></div>
+        <div class="nebula"></div>
+        <div class="nebula"></div>
+        <div class="nebula"></div>
+        <div class="shooting-star" style="top: 20%; left: 80%; animation-delay: 0s;"></div>
+        <div class="shooting-star" style="top: 60%; left: 30%; animation-delay: 2s;"></div>
+        <div class="shooting-star" style="top: 40%; left: 70%; animation-delay: 4s;"></div>
+    </div>
+
+    <!-- ─── CURSOR ─── -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="cursor-trail" id="cursorTrail1"></div>
+    <div class="cursor-trail" id="cursorTrail2"></div>
+    <div class="cursor-trail" id="cursorTrail3"></div>
+    <div class="cursor-trail" id="cursorTrail4"></div>
+    <div class="cursor-trail" id="cursorTrail5"></div>
+
+    <!-- ─── MAIN CONTENT ─── -->
     <div class="container">
+        
+        <!-- HEADER -->
         <div class="header">
             <div class="logo">
-                <div class="logo-icon"><i class="fas fa-terminal"></i></div>
+                <div class="logo-icon"><i class="fas fa-crown"></i></div>
                 <div>
-                    <h1>Omnix Script Hub</h1>
+                    <h1>Walls Resources</h1>
                     <span>Premium Roblox Scripts</span>
                 </div>
             </div>
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                <span>Live</span>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="version-tag">v3.0</span>
+                <div class="status-badge">
+                    <div class="status-dot"></div>
+                    <span>Live</span>
+                </div>
             </div>
         </div>
         
+        <!-- SEARCH -->
         <div class="search-bar">
             <i class="fas fa-search"></i>
             <input type="text" id="searchInput" placeholder="Search scripts..." oninput="filterScripts()">
         </div>
         
+        <!-- TABS -->
         <div class="tabs" id="tabContainer">
-            <button class="tab active" data-category="all" onclick="filterCategory('all')">All</button>
-            <button class="tab" data-category="aimbot" onclick="filterCategory('aimbot')">Aimbot</button>
-            <button class="tab" data-category="esp" onclick="filterCategory('esp')">ESP</button>
-            <button class="tab" data-category="admin" onclick="filterCategory('admin')">Admin</button>
+            <button class="tab active" data-category="all" onclick="filterCategory('all')"><i class="fas fa-th"></i> All</button>
+            <button class="tab" data-category="aimbot" onclick="filterCategory('aimbot')"><i class="fas fa-crosshairs"></i> Aimbot</button>
+            <button class="tab" data-category="esp" onclick="filterCategory('esp')"><i class="fas fa-eye"></i> ESP</button>
+            <button class="tab" data-category="admin" onclick="filterCategory('admin')"><i class="fas fa-shield-halved"></i> Admin</button>
+            <button class="tab" data-category="troll" onclick="filterCategory('troll')"><i class="fas fa-skull"></i> Troll</button>
+            <button class="tab" data-category="movement" onclick="filterCategory('movement')"><i class="fas fa-plane"></i> Movement</button>
+            <button class="tab" data-category="loot" onclick="filterCategory('loot')"><i class="fas fa-sack-dollar"></i> Loot</button>
+            <button class="tab" data-category="remote" onclick="filterCategory('remote')"><i class="fas fa-satellite-dish"></i> Remote</button>
+            <button class="tab" data-category="utility" onclick="filterCategory('utility')"><i class="fas fa-toolbox"></i> Utility</button>
         </div>
         
+        <!-- SCRIPTS -->
         <div class="scripts-grid" id="scriptsContainer"></div>
         
+        <!-- FOOTER -->
         <div class="footer">
             <div class="footer-stats">
                 <span><i class="fas fa-code"></i> <span id="scriptCount">0</span> scripts</span>
                 <span><i class="fas fa-eye"></i> <span id="visibleCount">0</span> loaded</span>
             </div>
-            <div>v2.0 · <i class="fas fa-github"></i> GitHub</div>
+            <div>
+                <a href="https://github.com/YOUR-USERNAME/walls-resources" target="_blank">
+                    <i class="fas fa-github"></i> GitHub
+                </a>
+                &nbsp;·&nbsp; Made with <i class="fas fa-heart" style="color: #ec4899;"></i>
+            </div>
         </div>
+        
     </div>
-    
+
+    <!-- ─── TOAST ─── -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle" style="color: #22c55e;"></i>
         <span id="toastMessage">Copied!</span>
@@ -307,12 +813,88 @@
 
     <script>
         // ============================================================
-        // ─── SCRIPT DATABASE ──────────────────────────────────────────
-        // ─── ONLY 3 SCRIPTS - EASY TO ADD MORE ──────────────────────
+        // ─── STARS GENERATOR ─────────────────────────────────────────
         // ============================================================
         
-        // REPLACE "YOUR-USERNAME" with your GitHub username
-        const BASE_URL = "https://raw.githubusercontent.com/YOUR-USERNAME/omnix-script-hub/main/raw/";
+        function createStars() {
+            const container = document.getElementById('stars');
+            const count = 200;
+            
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        // ============================================================
+        // ─── CURSOR TRAIL ────────────────────────────────────────────
+        // ============================================================
+        
+        const cursorDot = document.getElementById('cursorDot');
+        const cursorRing = document.getElementById('cursorRing');
+        const trails = [
+            document.getElementById('cursorTrail1'),
+            document.getElementById('cursorTrail2'),
+            document.getElementById('cursorTrail3'),
+            document.getElementById('cursorTrail4'),
+            document.getElementById('cursorTrail5')
+        ];
+        
+        let mouseX = 0, mouseY = 0;
+        let trailPositions = [];
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            cursorDot.style.left = (mouseX - 4) + 'px';
+            cursorDot.style.top = (mouseY - 4) + 'px';
+            
+            cursorRing.style.left = mouseX + 'px';
+            cursorRing.style.top = mouseY + 'px';
+            
+            trailPositions.push({ x: mouseX, y: mouseY });
+            if (trailPositions.length > 30) trailPositions.shift();
+            
+            trails.forEach((trail, index) => {
+                const pos = trailPositions[trailPositions.length - 1 - (index * 5)];
+                if (pos) {
+                    trail.style.left = (pos.x - 2) + 'px';
+                    trail.style.top = (pos.y - 2) + 'px';
+                    trail.style.opacity = 1 - (index / trails.length);
+                }
+            });
+        });
+        
+        // Hover effects on interactive elements
+        document.querySelectorAll('.script-card, .tab, .btn-load, .btn-copy, .search-bar input').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorRing.classList.add('hover');
+                cursorDot.style.width = '12px';
+                cursorDot.style.height = '12px';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorRing.classList.remove('hover');
+                cursorDot.style.width = '8px';
+                cursorDot.style.height = '8px';
+            });
+        });
+
+        // ============================================================
+        // ─── SCRIPTS DATABASE ────────────────────────────────────────
+        // ─── REPLACE "YOUR-USERNAME" WITH YOUR GITHUB USERNAME ─────
+        // ============================================================
+        
+        const BASE_URL = "https://raw.githubusercontent.com/YOUR-USERNAME/walls-resources/main/raw/";
         
         const scripts = [
             {
@@ -335,12 +917,57 @@
             },
             {
                 id: 3,
-                name: "Omnix Admin Suite",
+                name: "Walls Admin Suite",
                 desc: "Complete admin system with 150+ commands",
                 category: "admin",
                 icon: "fa-shield-halved",
                 iconClass: "admin",
                 raw: BASE_URL + "admin.lua"
+            },
+            {
+                id: 4,
+                name: "Troll Master",
+                desc: "Ultimate trolling tools - crash, lag, explode",
+                category: "troll",
+                icon: "fa-skull",
+                iconClass: "troll",
+                raw: BASE_URL + "troll.lua"
+            },
+            {
+                id: 5,
+                name: "Flight System",
+                desc: "Advanced flight with speed control & noclip",
+                category: "movement",
+                icon: "fa-plane",
+                iconClass: "movement",
+                raw: BASE_URL + "movement.lua"
+            },
+            {
+                id: 6,
+                name: "Loot System Pro",
+                desc: "Auto-loot with visual buttons and bypass",
+                category: "loot",
+                icon: "fa-sack-dollar",
+                iconClass: "loot",
+                raw: BASE_URL + "loot.lua"
+            },
+            {
+                id: 7,
+                name: "Remote Spy V3",
+                desc: "Monitor and block remote events/functions",
+                category: "remote",
+                icon: "fa-satellite-dish",
+                iconClass: "remote",
+                raw: BASE_URL + "remotespy.lua"
+            },
+            {
+                id: 8,
+                name: "Config Manager",
+                desc: "Save and load configs for any script",
+                category: "utility",
+                icon: "fa-sliders",
+                iconClass: "utility",
+                raw: BASE_URL + "config.lua"
             },
         ];
 
@@ -367,9 +994,9 @@
             
             if (filtered.length === 0) {
                 container.innerHTML = `
-                    <div style="text-align:center;padding:40px 0;color:#4b5563;">
-                        <i class="fas fa-search" style="font-size:24px;display:block;margin-bottom:12px;"></i>
-                        No scripts found
+                    <div style="text-align:center;padding:50px 0;color:#4b5563;font-size:16px;">
+                        <i class="fas fa-search" style="font-size:32px;display:block;margin-bottom:16px;color:#4b5563;"></i>
+                        No scripts found matching your search
                     </div>
                 `;
                 return;
@@ -378,6 +1005,7 @@
             filtered.forEach(script => {
                 const card = document.createElement('div');
                 card.className = 'script-card';
+                card.style.position = 'relative';
                 
                 card.innerHTML = `
                     <div class="script-info">
@@ -385,7 +1013,10 @@
                             <i class="fas ${script.icon}"></i>
                         </div>
                         <div>
-                            <div class="script-name">${script.name}</div>
+                            <div class="script-name">
+                                ${script.name}
+                                <span class="script-tag">${script.category}</span>
+                            </div>
                             <div class="script-desc">${script.desc}</div>
                         </div>
                     </div>
@@ -394,7 +1025,7 @@
                             <i class="fas fa-play"></i> Load
                         </button>
                         <button class="btn-copy" onclick="copyScript(${script.id})">
-                            <i class="fas fa-copy"></i> Copy
+                            <i class="fas fa-copy"></i>
                         </button>
                     </div>
                 `;
@@ -433,8 +1064,9 @@
                 showToast('✅ Load command copied! Paste in executor');
             });
             
-            console.log(`Script: ${script.name}`);
-            console.log(`Load command: ${loadCommand}`);
+            console.log(`📦 ${script.name}`);
+            console.log(`🔗 ${script.raw}`);
+            console.log(`📋 ${loadCommand}`);
         }
 
         function copyScript(id) {
@@ -474,10 +1106,8 @@
         }
 
         // ============================================================
-        // ─── INIT ────────────────────────────────────────────────────
+        // ─── KEYBOARD SHORTCUT ───────────────────────────────────────
         // ============================================================
-
-        renderScripts();
 
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
@@ -485,6 +1115,16 @@
                 document.getElementById('searchInput').focus();
             }
         });
+
+        // ============================================================
+        // ─── INIT ────────────────────────────────────────────────────
+        // ============================================================
+
+        renderScripts();
+        
+        console.log('🌌 Walls Resources loaded!');
+        console.log('📚 ' + scripts.length + ' scripts available');
+        console.log('✨ Made with ❤️');
     </script>
 </body>
 </html>
